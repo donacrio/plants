@@ -1,0 +1,44 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.3.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-toml
+      - id: check-yaml
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: pretty-format-json
+      - id: sort-simple-yaml
+      - id: trailing-whitespace
+
+  - repo: local
+    hooks:
+      - id: cargo-fmt
+        name: Run cargo fmt
+        language: system
+        types: [file, rust]
+        entry: cargo fmt -- --check
+        pass_filenames: false
+
+      - id: cargo-clippy
+        name: Run cargo clippy
+        language: system
+        types: [file, rust]
+        entry: cargo clippy --workspace --verbose -- -D warnings
+        pass_filenames: false
+
+      - id: cargo-clippy-examples
+        name: Run cargo clippy examples
+        language: system
+        types: [file, rust]
+        entry: cargo clippy --examples --workspace --verbose -- -D warnings
+        pass_filenames: false
+
+      - id: cargo-test
+        name: Run cargo test
+        language: system
+        types: [file, rust]
+        entry: cargo test
+        pass_filenames: false
